@@ -1,11 +1,12 @@
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import useVets from '../../data/queryHooks/useVets';
 import PageContainer from '../shared/PageContainer';
 import Button from '@pc/pet-clinic-components/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useState } from 'react';
+import { Vet } from '../../types';
 
 const style = {
 	position: 'absolute',
@@ -18,9 +19,9 @@ const style = {
 	boxShadow: 24,
 	p: 4,
 	borderRadius: '8px',
-};
+} as const;
 
-const columns = [
+const columns: GridColDef[] = [
 	{ field: 'id', headerName: 'ID', width: 90 },
 	{
 		field: 'firstName',
@@ -47,16 +48,16 @@ const columns = [
 		description: 'This column has a value getter and is not sortable.',
 		sortable: false,
 		width: 160,
-		valueGetter: params =>
+		valueGetter: (params) =>
 			`${params.row.firstName || ''} ${params.row.lastName || ''}`,
 	},
 ];
 
-export default function VetsPage() {
-	const vets = useVets();
-	const [open, setOpen] = useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+export default function VetsPage(): JSX.Element {
+	const vets: Vet[] = useVets();
+	const [open, setOpen] = useState<boolean>(false);
+	const handleOpen = (): void => setOpen(true);
+	const handleClose = (): void => setOpen(false);
 
 	return (
 		<PageContainer title="Vets">
