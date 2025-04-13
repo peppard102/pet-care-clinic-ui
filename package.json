@@ -14,12 +14,17 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
+    "@mui/x-data-grid": "^7.28.3",
+    "@pc/pet-clinic-components": "file:peppard102-pet-clinic-components-0.0.0-test-3.tgz",
     "@tanstack/react-query": "^5.73.3",
     "axios": "^1.8.4",
+    "formik": "^2.4.6",
+    "msw": "^2.7.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-error-boundary": "^5.0.0",
-    "react-router-dom": "^7.5.0"
+    "react-router-dom": "^7.5.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
