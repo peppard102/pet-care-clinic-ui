@@ -2,36 +2,17 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { fetchPets } from '../apiCalls';
 import { QueryKey } from './QueryKeys';
 import { formatAddress } from '../../utils/helperFunctions';
-
-interface Address {
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-}
-
-interface PetData {
-  id: string | number;
-  firstName: string;
-  lastName: string;
-  age: number;
-  address: Address;
-}
-
-interface FormattedPet extends PetData {
-  formattedAddress: string;
-  fullName: string;
-}
+import { Pet } from '../../types';
 
 // Query for the list of pets.
 const usePets = (): FormattedPet[] => {
-	const { data } = useSuspenseQuery({
+	const { data } = useSuspenseQuery<Pet[]>({
 		queryKey: [QueryKey.GET_PETS],
 		queryFn: fetchPets
 	});
 
 	return (
-		data?.map((pet: PetData): FormattedPet => ({
+		data?.map((pet: Pet): FormattedPet => ({
 			...pet,
 			formattedAddress: formatAddress(
 				pet?.address.street,
@@ -43,5 +24,10 @@ const usePets = (): FormattedPet[] => {
 		})) || []
 	);
 };
+
+interface FormattedPet extends Pet {
+  formattedAddress: string;
+  fullName: string;
+}
 
 export default usePets;
