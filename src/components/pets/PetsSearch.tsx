@@ -9,9 +9,20 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
-export default function PetsSearch({ openAddPetModal }) {
+interface PetsSearchProps {
+  openAddPetModal: () => void;
+}
+
+interface Pet {
+  id: string | number;
+  fullName: string;
+  age: number;
+  formattedAddress: string;
+}
+
+export default function PetsSearch({ openAddPetModal }: PetsSearchProps): JSX.Element {
 	const pets = usePets();
-	const [selectedPet, setSelectedPet] = useState(null);
+	const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
 
 	return (
 		<>
@@ -21,11 +32,11 @@ export default function PetsSearch({ openAddPetModal }) {
 			<Box sx={{ mb: 2 }}>
 				<Autocomplete
 					options={pets}
-					getOptionLabel={option => option.fullName}
-					renderInput={params => (
+					getOptionLabel={(option: Pet) => option.fullName}
+					renderInput={(params) => (
 						<TextField {...params} label="Search Pets" variant="outlined" />
 					)}
-					onChange={(_event, value) => setSelectedPet(value)}
+					onChange={(_event, value: Pet | null) => setSelectedPet(value)}
 					fullWidth
 				/>
 			</Box>

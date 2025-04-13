@@ -1,10 +1,14 @@
 import Box from '@mui/material/Box';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import usePets from '../../data/queryHooks/usePets';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
-const columns = [
+interface PetsTableProps {
+  openAddPetModal: () => void;
+}
+
+const columns: GridColDef[] = [
 	{ field: 'id', headerName: 'ID', width: 90 },
 	{
 		field: 'firstName',
@@ -40,7 +44,7 @@ const columns = [
 	},
 ];
 
-export default function PetsTable({ openAddPetModal }) {
+export default function PetsTable({ openAddPetModal }: PetsTableProps): JSX.Element {
 	const pets = usePets();
 
 	return (

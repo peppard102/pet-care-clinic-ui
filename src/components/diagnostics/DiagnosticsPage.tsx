@@ -6,15 +6,16 @@ import Box from '@mui/material/Box';
 import { Typography } from '@mui/material';
 import { askQuestion } from '../../data/apiCalls';
 import Skeleton from '@mui/material/Skeleton';
+import React from 'react';
 
-export default function DiagnosticsPage() {
-	const [newQuestion, setNewQuestion] = useState('');
-	const [questions, setQuestions] = useState([]);
-	const [answers, setAnswers] = useState([]);
-	const [isProcessing, setIsProcessing] = useState(false);
-	const [isError, setIsError] = useState(false);
+export default function DiagnosticsPage(): React.ReactElement {
+	const [newQuestion, setNewQuestion] = useState<string>('');
+	const [questions, setQuestions] = useState<string[]>([]);
+	const [answers, setAnswers] = useState<string[]>([]);
+	const [isProcessing, setIsProcessing] = useState<boolean>(false);
+	const [isError, setIsError] = useState<boolean>(false);
 
-	const submitQuestion = async () => {
+	const submitQuestion = async (): Promise<void> => {
 		setQuestions(prev => [...prev, newQuestion]);
 		setNewQuestion('');
 		setIsProcessing(true);
@@ -43,7 +44,7 @@ export default function DiagnosticsPage() {
 					maxRows={8}
 					value={newQuestion}
 					sx={{ minWidth: { xs: '300px', sm: '500px', md: '600px' }, mb: 2 }}
-					onChange={event => setNewQuestion(event.target.value)}
+					onChange={(event: React.ChangeEvent<HTMLInputElement>) => setNewQuestion(event.target.value)}
 				/>
 				<Button variant="contained" onClick={submitQuestion} sx={{ mb: 2 }}>
 					Submit question

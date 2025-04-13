@@ -2,13 +2,24 @@ import Box from '@mui/material/Box';
 import useVets from '../../data/queryHooks/useVets';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { bool, func } from 'prop-types';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
+
+interface AddPetProps {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}
+
+interface PetFormValues {
+  firstName: string;
+  lastName: string;
+  vet: string;
+  age: number;
+}
 
 const style = {
 	position: 'absolute',
@@ -38,11 +49,11 @@ const validationSchema = Yup.object({
 	vet: Yup.string().required('Vet is required'),
 });
 
-export default function AddPet({ open, setOpen }) {
-	const handleClose = () => setOpen(false);
+export default function AddPet({ open, setOpen }: AddPetProps): JSX.Element {
+	const handleClose = (): void => setOpen(false);
 	const vets = useVets();
 
-	const formik = useFormik({
+	const formik = useFormik<PetFormValues>({
 		initialValues: {
 			firstName: '',
 			lastName: '',
@@ -50,7 +61,7 @@ export default function AddPet({ open, setOpen }) {
 			age: 0,
 		},
 		validationSchema,
-		onSubmit: values => {
+		onSubmit: (values: PetFormValues) => {
 			alert(JSON.stringify(values, null, 2)); // TODO: replace with post request
 		},
 	});
@@ -118,8 +129,3 @@ export default function AddPet({ open, setOpen }) {
 		</Modal>
 	);
 }
-
-AddPet.propTypes = {
-	open: bool,
-	setOpen: func,
-};

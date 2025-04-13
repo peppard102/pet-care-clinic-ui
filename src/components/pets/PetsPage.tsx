@@ -5,10 +5,10 @@ import useIsTabletOrSmaller from '../../utils/customHooks/useIsTabletOrSmaller';
 import PetsTable from './PetsTable';
 import PetsSearch from './PetsSearch';
 
-export default function PetsPage() {
+export default function PetsPage(): JSX.Element {
 	const isTabletOrSmaller = useIsTabletOrSmaller();
-	const [modalOpen, setModalOpen] = useState(false);
-	const openAddPetModal = () => setModalOpen(true);
+	const [modalOpen, setModalOpen] = useState<boolean>(false);
+	const openAddPetModal = (): void => setModalOpen(true);
 
 	return (
 		<PageContainer title="Pets">
