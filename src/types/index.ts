@@ -18,4 +18,6 @@ export interface Pet extends BaseIndividual {
   address: Address;
 }
 
-export interface Vet extends BaseIndividual {}
+export interface Vet extends BaseIndividual {
+  specialization: string;
+}
