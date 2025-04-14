@@ -1,4 +1,6 @@
-export const petsMockData = [
+import { Pet } from "../../types";
+
+export const petsMockData: Pet[] = [
 	{
 		id: 1,
 		lastName: 'Snow',
