@@ -1,8 +1,11 @@
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { bool } from 'prop-types';
 
-const LoadingScreen = ({ isLoading }) => (
+interface LoadingScreenProps {
+	isLoading: boolean;
+}
+
+const LoadingScreen = ({ isLoading }: LoadingScreenProps) => (
 	<Backdrop
 		sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }}
 		open={isLoading}
@@ -10,9 +13,5 @@ const LoadingScreen = ({ isLoading }) => (
 		<CircularProgress color="inherit" />
 	</Backdrop>
 );
-
-LoadingScreen.propTypes = {
-	isLoading: bool.isRequired,
-};
 
 export default LoadingScreen;
