@@ -1,14 +1,17 @@
 import LoadingScreen from './LoadingScreen';
-import { Suspense } from 'react';
+import { Suspense, ReactNode } from 'react';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 import { ErrorBoundary } from 'react-error-boundary';
 import ServerErrorPage from './ErrorPages/ServerErrorPage';
-import { element, oneOfType, arrayOf } from 'prop-types';
 import { useLocation } from 'react-router-dom';
+
+interface ServerStateProviderProps {
+	children: ReactNode;
+}
 
 // This component handles the loading screen and the error page that shows
 // up when an API call fails.
-const ServerStateProvider = ({ children }) => {
+const ServerStateProvider = ({ children }: ServerStateProviderProps) => {
 	const location = useLocation();
 
 	return (
@@ -25,10 +28,6 @@ const ServerStateProvider = ({ children }) => {
 			</QueryErrorResetBoundary>
 		</Suspense>
 	);
-};
-
-ServerStateProvider.propTypes = {
-	children: oneOfType([element, arrayOf(element)]),
 };
 
 export default ServerStateProvider;
