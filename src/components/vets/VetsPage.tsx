@@ -45,15 +45,12 @@ const columns: GridColDef[] = [
 	{
 		field: 'fullName',
 		headerName: 'Full name',
-		description: 'This column has a value getter and is not sortable.',
 		sortable: false,
 		width: 160,
-		valueGetter: (params) =>
-			`${params.row.firstName || ''} ${params.row.lastName || ''}`,
 	},
 ];
 
-export default function VetsPage(): JSX.Element {
+export default function VetsPage(): React.ReactElement {
 	const vets: Vet[] = useVets();
 	const [open, setOpen] = useState<boolean>(false);
 	const handleOpen = (): void => setOpen(true);
