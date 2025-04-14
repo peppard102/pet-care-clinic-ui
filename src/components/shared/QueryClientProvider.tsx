@@ -3,11 +3,15 @@ import {
 	QueryClient,
 } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { element, oneOfType, arrayOf } from 'prop-types';
+import { ReactNode } from 'react';
 import ServerStateProvider from './ServerStateProvider';
 
+interface QueryClientProviderProps {
+	children: ReactNode;
+}
+
 // This component sets up react-query
-const QueryClientProvider = ({ children }) => {
+const QueryClientProvider = ({ children }: QueryClientProviderProps) => {
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
@@ -22,10 +26,6 @@ const QueryClientProvider = ({ children }) => {
 			<ReactQueryDevtools />
 		</ReactQueryProvider>
 	);
-};
-
-QueryClientProvider.propTypes = {
-	children: oneOfType([element, arrayOf(element)]),
 };
 
 export default QueryClientProvider;
