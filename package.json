@@ -6,15 +6,42 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "jest --coverage",
+    "test:watch": "jest --watchAll --coverage",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write . --config ./.prettierrc",
+    "docker:build": "docker build -t pet-care-clinic .",
+    "docker:run": "docker run -p 3000:80 pet-care-clinic"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@mui/x-data-grid": "^7.28.3",
+    "@pc/pet-clinic-components": "file:peppard102-pet-clinic-components-0.0.0-test-3.tgz",
+    "@tanstack/react-query": "^5.73.3",
+    "axios": "^1.8.4",
+    "css-mediaquery": "^0.1.2",
+    "formik": "^2.4.6",
+    "jest-environment-jsdom": "^29.7.0",
+    "msw": "^2.7.4",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-error-boundary": "^5.0.0",
+    "react-router-dom": "^7.5.0",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
+    "@swc/jest": "^0.2.37",
+    "@tanstack/react-query-devtools": "^5.74.3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest": "^29.5.14",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "@vitejs/plugin-react-swc": "^3.8.0",
@@ -22,6 +49,8 @@
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
