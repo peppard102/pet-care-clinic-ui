@@ -202,8 +202,14 @@ const createMatchMedia = width => query => ({
 	matches: mediaQuery.match(query, {
 		width,
 	}),
+	media: query,
+	onchange: null,
 	addListener: () => {},
 	removeListener: () => {},
+	// Modern event listener methods used by Material UI
+	addEventListener: () => {},
+	removeEventListener: () => {},
+	dispatchEvent: () => {},
 });
 
 export const changeScreenSize = newScreenSize => {
