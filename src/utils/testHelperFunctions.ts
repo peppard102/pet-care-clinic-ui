@@ -206,7 +206,7 @@ type MatchMediaReturnType = {
 	removeListener: () => void;
 	addEventListener: () => void;
 	removeEventListener: () => void;
-	dispatchEvent: () => void;
+	dispatchEvent: () => boolean;
 };
 
 const createMatchMedia = (width: string) => (query: string): MatchMediaReturnType => ({
@@ -220,12 +220,10 @@ const createMatchMedia = (width: string) => (query: string): MatchMediaReturnTyp
 	// Modern event listener methods used by Material UI
 	addEventListener: () => {},
 	removeEventListener: () => {},
-	dispatchEvent: () => {},
+	dispatchEvent: () => true,
 });
 
 export const changeScreenSize = (newScreenSize: string): void => {
-	// This is needed because TypeScript types don't perfectly match our mock
-	// @ts-ignore
 	window.matchMedia = createMatchMedia(newScreenSize);
 };
 
