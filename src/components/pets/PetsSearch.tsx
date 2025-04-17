@@ -20,7 +20,7 @@ interface Pet {
   formattedAddress: string;
 }
 
-export default function PetsSearch({ openAddPetModal }: PetsSearchProps): JSX.Element {
+export default function PetsSearch({ openAddPetModal }: PetsSearchProps) {
 	const pets = usePets();
 	const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
 

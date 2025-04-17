@@ -49,7 +49,7 @@ const validationSchema = Yup.object({
 	vet: Yup.string().required('Vet is required'),
 });
 
-export default function AddPet({ open, setOpen }: AddPetProps): JSX.Element {
+export default function AddPet({ open, setOpen }: AddPetProps) {
 	const handleClose = (): void => setOpen(false);
 	const vets = useVets();
 
