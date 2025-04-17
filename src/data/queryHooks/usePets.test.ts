@@ -3,16 +3,20 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import usePets from './usePets';
 import { petsMockData } from '../../mocks/mockData/petsMockData';
 import { formatAddress } from '../../utils/helperFunctions';
+import { Mock } from 'vitest';
 
 // Mock the React Query hook
 vi.mock('@tanstack/react-query', () => ({
   useSuspenseQuery: vi.fn(),
 }));
 
+// Type assertion for the mocked function
+const mockedUseSuspenseQuery = useSuspenseQuery as Mock;
+
 describe('usePets', () => {
   it('should transform pet data with formatted address and full name', () => {
     // Setup mock response
-    useSuspenseQuery.mockReturnValue({
+    mockedUseSuspenseQuery.mockReturnValue({
       data: [petsMockData[0]], // Use first pet from mock data
     });
 
@@ -52,7 +56,7 @@ describe('usePets', () => {
       firstName: undefined
     };
     
-    useSuspenseQuery.mockReturnValue({
+    mockedUseSuspenseQuery.mockReturnValue({
       data: [petWithMissingFirstName],
     });
 
@@ -68,7 +72,7 @@ describe('usePets', () => {
       lastName: undefined
     };
     
-    useSuspenseQuery.mockReturnValue({
+    mockedUseSuspenseQuery.mockReturnValue({
       data: [petWithMissingLastName],
     });
 
@@ -91,7 +95,7 @@ describe('usePets', () => {
       }
     };
     
-    useSuspenseQuery.mockReturnValue({
+    mockedUseSuspenseQuery.mockReturnValue({
       data: [petWithIncompleteAddress],
     });
 
@@ -104,7 +108,7 @@ describe('usePets', () => {
 
   it('should return empty array when data is undefined', () => {
     // Setup mock response with undefined data
-    useSuspenseQuery.mockReturnValue({
+    mockedUseSuspenseQuery.mockReturnValue({
       data: undefined,
     });
 
