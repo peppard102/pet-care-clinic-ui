@@ -5,16 +5,11 @@ import { petsMockData } from '../../mocks/mockData/petsMockData';
 import { formatAddress } from '../../utils/helperFunctions';
 
 // Mock the React Query hook
-jest.mock('@tanstack/react-query', () => ({
-  useSuspenseQuery: jest.fn(),
+vi.mock('@tanstack/react-query', () => ({
+  useSuspenseQuery: vi.fn(),
 }));
 
 describe('usePets', () => {
-  beforeEach(() => {
-    // Clear all mocks before each test
-    jest.clearAllMocks();
-  });
-
   it('should transform pet data with formatted address and full name', () => {
     // Setup mock response
     useSuspenseQuery.mockReturnValue({
