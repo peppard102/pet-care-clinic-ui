@@ -7,7 +7,7 @@ interface PageContainerProps {
   children: ReactNode;
 }
 
-const PageContainer = ({ title, children }: PageContainerProps): JSX.Element => (
+const PageContainer = ({ title, children }: PageContainerProps) => (
 	<Container
 		sx={{
 			my: 8,

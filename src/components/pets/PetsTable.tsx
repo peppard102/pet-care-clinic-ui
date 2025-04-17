@@ -44,7 +44,7 @@ const columns: GridColDef[] = [
 	},
 ];
 
-export default function PetsTable({ openAddPetModal }: PetsTableProps): JSX.Element {
+export default function PetsTable({ openAddPetModal }: PetsTableProps) {
 	const pets = usePets();
 
 	return (
