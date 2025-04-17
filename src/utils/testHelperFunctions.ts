@@ -4,7 +4,7 @@ import mediaQuery from 'css-mediaquery';
 import userEvent from '@testing-library/user-event';
 
 // #region Buttons
-export const assertButtonVisible = buttonText => {
+export const assertButtonVisible = (buttonText: string): void => {
 	expect(
 		screen.getByRole('button', {
 			name: buttonText,
@@ -12,7 +12,7 @@ export const assertButtonVisible = buttonText => {
 	).toBeVisible();
 };
 
-export const assertNumButton = (buttonText, num) => {
+export const assertNumButton = (buttonText: string, num: number): void => {
 	// Assert the button shows up a specified number of times
 	expect(
 		screen.getAllByRole('button', {
@@ -21,7 +21,7 @@ export const assertNumButton = (buttonText, num) => {
 	).toBe(num);
 };
 
-export const assertButtonNotVisible = buttonText => {
+export const assertButtonNotVisible = (buttonText: string): void => {
 	expect(
 		screen.queryByRole('button', {
 			name: buttonText,
@@ -29,7 +29,7 @@ export const assertButtonNotVisible = buttonText => {
 	).not.toBeInTheDocument();
 };
 
-export const clickButton = async buttonText => {
+export const clickButton = async (buttonText: string): Promise<void> => {
 	const buttonToClick = screen.getByRole('button', {
 		name: buttonText,
 	});
@@ -37,7 +37,7 @@ export const clickButton = async buttonText => {
 	await userEvent.click(buttonToClick);
 };
 
-export const asyncClickButton = async buttonText => {
+export const asyncClickButton = async (buttonText: string): Promise<void> => {
 	const buttonToClick = await screen.findByRole('button', {
 		name: buttonText,
 	});
@@ -47,21 +47,21 @@ export const asyncClickButton = async buttonText => {
 // #endregion
 
 // #region Links
-export const assertLinkVisible = (url, linkText) => {
+export const assertLinkVisible = (url: string, linkText: string): void => {
 	expect(screen.getByRole('link', { name: linkText })).toHaveAttribute(
 		'href',
 		url
 	);
 };
 
-export const asyncAssertLinkVisible = async (url, linkText) => {
+export const asyncAssertLinkVisible = async (url: string, linkText: string): Promise<void> => {
 	expect(await screen.findByRole('link', { name: linkText })).toHaveAttribute(
 		'href',
 		url
 	);
 };
 
-export const assertLinkNotVisible = linkText => {
+export const assertLinkNotVisible = (linkText: string): void => {
 	expect(
 		screen.queryByRole('link', {
 			name: linkText,
@@ -69,7 +69,7 @@ export const assertLinkNotVisible = linkText => {
 	).not.toBeInTheDocument();
 };
 
-export const clickLink = linkText => {
+export const clickLink = (linkText: string): void => {
 	const linkToClick = screen.getByRole('link', {
 		name: linkText,
 	});
@@ -79,26 +79,26 @@ export const clickLink = linkText => {
 // #endregion
 
 // #region Text
-export const assertTextVisible = text => {
+export const assertTextVisible = (text: string): void => {
 	expect(screen.getByText(text)).toBeVisible();
 };
 
-export const asyncAssertTextVisible = async text => {
+export const asyncAssertTextVisible = async (text: string): Promise<void> => {
 	expect(await screen.findByText(text)).toBeVisible();
 };
 
-export const assertTextNotVisible = text => {
+export const assertTextNotVisible = (text: string): void => {
 	expect(screen.queryByText(text)).not.toBeInTheDocument();
 };
 
-export const assertNumText = (text, num) => {
+export const assertNumText = (text: string, num: number): void => {
 	// Assert the text shows up a specified number of times
 	expect(screen.getAllByText(text).length).toBe(num);
 };
 // #endregion
 
 // #region Headings
-export const assertHeadingVisible = text => {
+export const assertHeadingVisible = (text: string): void => {
 	expect(
 		screen.getByRole('heading', {
 			name: text,
@@ -106,12 +106,12 @@ export const assertHeadingVisible = text => {
 	).toBeVisible();
 };
 
-export const assertNumHeading = (text, num) => {
+export const assertNumHeading = (text: string, num: number): void => {
 	// Assert the heading shows up a specified number of times
 	expect(screen.getAllByRole('heading', { name: text }).length).toBe(num);
 };
 
-export const asyncAssertHeadingVisible = async text => {
+export const asyncAssertHeadingVisible = async (text: string): Promise<void> => {
 	expect(
 		await screen.findByRole('heading', {
 			name: text,
@@ -121,7 +121,7 @@ export const asyncAssertHeadingVisible = async text => {
 // #endregion
 
 // #region Checkboxes
-export const assertNumCheckedBoxes = numChecked => {
+export const assertNumCheckedBoxes = (numChecked: number): void => {
 	const checkedCheckboxes = screen.queryAllByRole('checkbox', {
 		checked: true,
 	});
@@ -129,7 +129,7 @@ export const assertNumCheckedBoxes = numChecked => {
 	expect(checkedCheckboxes.length).toBe(numChecked);
 };
 
-export const assertNumUncheckedBoxes = numUnchecked => {
+export const assertNumUncheckedBoxes = (numUnchecked: number): void => {
 	const uncheckedCheckboxes = screen.queryAllByRole('checkbox', {
 		checked: false,
 	});
@@ -139,54 +139,54 @@ export const assertNumUncheckedBoxes = numUnchecked => {
 // #endregion
 
 // #region ListItems
-export const assertNumListItems = numListItems => {
+export const assertNumListItems = (numListItems: number): void => {
 	expect(screen.queryAllByRole('listitem').length).toBe(numListItems);
 };
 // #endregion
 
 // #region TestID
-export const assertTestIdVisible = testId => {
+export const assertTestIdVisible = (testId: string): void => {
 	expect(screen.getByTestId(testId)).toBeVisible();
 };
 
-export const assertNumTestId = (testId, num) => {
+export const assertNumTestId = (testId: string, num: number): void => {
 	// Assert the testId shows up a specified number of times
 	expect(screen.getAllByTestId(testId).length).toBe(num);
 };
 
-export const asyncAssertTestIdVisible = async testId => {
+export const asyncAssertTestIdVisible = async (testId: string): Promise<void> => {
 	expect(await screen.findByTestId(testId)).toBeVisible();
 };
 
-export const assertTestIdNotVisible = testId => {
+export const assertTestIdNotVisible = (testId: string): void => {
 	expect(screen.queryByTestId(testId)).not.toBeInTheDocument();
 };
 // #endregion
 
 // #region Image
-export const assertImageVisible = altText => {
+export const assertImageVisible = (altText: string): void => {
 	expect(screen.getByRole('img')).toHaveAttribute('alt', altText);
 };
 
-export const assertImageVisibleByAltText = altText => {
+export const assertImageVisibleByAltText = (altText: string): void => {
 	expect(screen.getByAltText(altText)).toBeVisible();
 };
 
-export const assertImageSrc = (alt, src) => {
+export const assertImageSrc = (alt: string, src: string): void => {
 	expect(screen.getByAltText(alt)).toHaveAttribute('src', src);
 };
 
-export const assertImageCount = count => {
+export const assertImageCount = (count: number): void => {
 	expect(screen.getAllByRole('img').length).toEqual(count);
 };
 // #endregion
 
 // #region SEO
-export const asyncAssertPageTitle = async text => {
+export const asyncAssertPageTitle = async (text: string): Promise<void> => {
 	await waitFor(() => expect(document.title).toBe(text));
 };
 
-export const asyncAssertPageDescription = async text => {
+export const asyncAssertPageDescription = async (text: string): Promise<void> => {
 	await waitFor(() =>
 		expect(
 			document.head
@@ -198,7 +198,18 @@ export const asyncAssertPageDescription = async text => {
 // #endregion
 
 // #region Screen Size
-const createMatchMedia = width => query => ({
+type MatchMediaReturnType = {
+	matches: boolean;
+	media: string;
+	onchange: null;
+	addListener: () => void;
+	removeListener: () => void;
+	addEventListener: () => void;
+	removeEventListener: () => void;
+	dispatchEvent: () => void;
+};
+
+const createMatchMedia = (width: string) => (query: string): MatchMediaReturnType => ({
 	matches: mediaQuery.match(query, {
 		width,
 	}),
@@ -212,13 +223,19 @@ const createMatchMedia = width => query => ({
 	dispatchEvent: () => {},
 });
 
-export const changeScreenSize = newScreenSize => {
+export const changeScreenSize = (newScreenSize: string): void => {
+	// This is needed because TypeScript types don't perfectly match our mock
 	// @ts-ignore
 	window.matchMedia = createMatchMedia(newScreenSize);
 };
 
+interface Breakpoint {
+	size: string;
+	width: string;
+}
+
 // Breakpoints that can be used to test different screen sizes.
-export const breakpointSmall = { size: 'small', width: '200px' };
-export const breakpointMedium = { size: 'medium', width: '700px' };
-export const breakpointLarge = { size: 'large', width: '1200px' };
+export const breakpointSmall: Breakpoint = { size: 'small', width: '200px' };
+export const breakpointMedium: Breakpoint = { size: 'medium', width: '700px' };
+export const breakpointLarge: Breakpoint = { size: 'large', width: '1200px' };
 // #endregion
