@@ -17,14 +17,14 @@ interface Route {
 
 export const routes: Route[] = [
 	{
-		label: 'Symptom Checker',
-		href: '/symptom-checker',
+		label: null,
+		href: '/',
 		component: <SymptomCheckerPage />,
 	},
 	{
-		label: null,
-		href: '/',
-		component: <VetsPage />,
+		label: 'Symptom Checker',
+		href: '/symptom-checker',
+		component: <SymptomCheckerPage />,
 	},
 	{
 		label: 'Vets',
