@@ -27,6 +27,11 @@ export const routes: Route[] = [
     component: <SymptomCheckerPage />,
   },
   {
+    label: 'General Medical Questions',
+    href: '/generalQuestions',
+    component: <GeneralQuestionsPage />,
+  },
+  {
     label: 'Vets',
     href: '/vets',
     component: <VetsPage />,
@@ -35,10 +40,5 @@ export const routes: Route[] = [
     label: 'Pets',
     href: '/pets',
     component: <PetsPage />,
-  },
-  {
-    label: 'General Medical Questions',
-    href: '/generalQuestions',
-    component: <GeneralQuestionsPage />,
   },
 ];
