@@ -1,44 +1,44 @@
-import { asyncAssertHeadingVisible } from "../../utils/testHelperFunctions";
-import GeneralQuestionsPage from "./GeneralQuestionsPage";
-import { customRender } from "../../mocks/customRender";
-import { screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { server } from "../../mocks/server";
-import { rest } from "msw";
+import { asyncAssertHeadingVisible } from '../../utils/testHelperFunctions';
+import GeneralQuestionsPage from './GeneralQuestionsPage';
+import { customRender } from '../../mocks/customRender';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { server } from '../../mocks/server';
+import { rest } from 'msw';
 
-describe("GeneralQuestionsPage Page", () => {
-  test("A11y", async () => {
+describe('GeneralQuestionsPage Page', () => {
+  test('A11y', async () => {
     const { axeTest } = customRender(<GeneralQuestionsPage />);
     await axeTest();
   }, 60000); // Increase timeout for slower tests.
 
-  test("renders header", async () => {
+  test('renders header', async () => {
     customRender(<GeneralQuestionsPage />);
-    await asyncAssertHeadingVisible("General Questions");
+    await asyncAssertHeadingVisible('General Medical Questions');
   }, 10000);
 
-  test("submits a question and displays the answer", async () => {
+  test('submits a question and displays the answer', async () => {
     customRender(<GeneralQuestionsPage />);
 
     // Input a question
     const inputField = screen.getByLabelText(/Input your medical question:/i);
-    await userEvent.type(inputField, "What is a headache?");
+    await userEvent.type(inputField, 'What is a headache?');
 
     // Submit the question
-    const submitButton = screen.getByRole("button", {
+    const submitButton = screen.getByRole('button', {
       name: /Submit question/i,
     });
     await userEvent.click(submitButton);
 
     // Verify the answer is displayed
     await waitFor(() => {
-      expect(screen.getByText("This is a mock answer.")).toBeInTheDocument();
+      expect(screen.getByText('This is a mock answer.')).toBeInTheDocument();
     });
   });
 
-  test("displays error message on API failure", async () => {
+  test('displays error message on API failure', async () => {
     server.use(
-      rest.post("*/OpenAI", (_req, res, ctx) => {
+      rest.post('*/OpenAI', (_req, res, ctx) => {
         return res(ctx.status(500));
       })
     );
@@ -47,10 +47,10 @@ describe("GeneralQuestionsPage Page", () => {
 
     // Input a question
     const inputField = screen.getByLabelText(/Input your medical question:/i);
-    await userEvent.type(inputField, "What is a fever?");
+    await userEvent.type(inputField, 'What is a fever?');
 
     // Submit the question
-    const submitButton = screen.getByRole("button", {
+    const submitButton = screen.getByRole('button', {
       name: /Submit question/i,
     });
     await userEvent.click(submitButton);
@@ -59,7 +59,7 @@ describe("GeneralQuestionsPage Page", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          /Error accessing diagnostics service. Try again later./i
+          /Error accessing general questions service. Try again later./i
         )
       ).toBeInTheDocument();
     });

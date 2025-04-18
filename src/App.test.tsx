@@ -43,13 +43,13 @@ test('Can navigate to all the pages', async () => {
     expect(vetsText).toBeInTheDocument();
   });
 
-  // Click the General Questions button and check if the General Questions page is displayed
+  // Click the General Medical Questions button and check if the General Medical Questions page is displayed
   await userEvent.click(
-    screen.getByRole('button', { name: /General Questions/i })
+    screen.getByRole('button', { name: /General Medical Questions/i })
   );
   await waitFor(() => {
     const generalQuestionsText = screen.getByRole('heading', {
-      name: /General Questions/i,
+      name: /General Medical Questions/i,
     });
     expect(generalQuestionsText).toBeInTheDocument();
   });

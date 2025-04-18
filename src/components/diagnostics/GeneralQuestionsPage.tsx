@@ -1,16 +1,16 @@
-import Button from "@mui/material/Button";
-import PageContainer from "../shared/PageContainer";
-import TextField from "@mui/material/TextField";
-import { useState } from "react";
-import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
-import { askQuestion } from "../../data/apiCalls";
-import Skeleton from "@mui/material/Skeleton";
-import React from "react";
-import ReactMarkdown from "react-markdown";
+import Button from '@mui/material/Button';
+import PageContainer from '../shared/PageContainer';
+import TextField from '@mui/material/TextField';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import { Typography } from '@mui/material';
+import { askQuestion } from '../../data/apiCalls';
+import Skeleton from '@mui/material/Skeleton';
+import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 export default function GeneralQuestionsPage(): React.ReactElement {
-  const [newQuestion, setNewQuestion] = useState<string>("");
+  const [newQuestion, setNewQuestion] = useState<string>('');
   const [questions, setQuestions] = useState<string[]>([]);
   const [answers, setAnswers] = useState<string[]>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -18,7 +18,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
 
   const submitQuestion = async (): Promise<void> => {
     setQuestions((prev) => [...prev, newQuestion]);
-    setNewQuestion("");
+    setNewQuestion('');
     setIsProcessing(true);
     setIsError(false);
 
@@ -33,9 +33,9 @@ export default function GeneralQuestionsPage(): React.ReactElement {
   };
 
   return (
-    <PageContainer title="General Questions">
+    <PageContainer title="General Medical Questions">
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <TextField
           id="outlined-basic"
@@ -44,7 +44,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
           multiline
           maxRows={8}
           value={newQuestion}
-          sx={{ minWidth: { xs: "300px", sm: "500px", md: "600px" }, mb: 2 }}
+          sx={{ minWidth: { xs: '300px', sm: '500px', md: '600px' }, mb: 2 }}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setNewQuestion(event.target.value)
           }
@@ -57,15 +57,15 @@ export default function GeneralQuestionsPage(): React.ReactElement {
             <Box
               sx={{
                 mt: 5,
-                maxWidth: "900px",
-                border: "1px solid gray",
-                padding: "10px",
-                borderRadius: "8px",
+                maxWidth: '900px',
+                border: '1px solid gray',
+                padding: '10px',
+                borderRadius: '8px',
               }}
             >
               <Typography component="span" fontWeight="bold">
                 Question:
-              </Typography>{" "}
+              </Typography>{' '}
               {question}
             </Box>
             <Box sx={{ mt: 5 }}>
@@ -102,14 +102,14 @@ export default function GeneralQuestionsPage(): React.ReactElement {
           <Skeleton
             variant="rounded"
             sx={{
-              width: { xs: "90%", sm: 500 },
+              width: { xs: '90%', sm: 500 },
             }}
             height={60}
           />
         )}
         {isError && (
           <Typography color="error">
-            Error accessing diagnostics service. Try again later.
+            Error accessing general questions service. Try again later.
           </Typography>
         )}
       </Box>
