@@ -7,7 +7,7 @@ import { Typography } from '@mui/material';
 import { askQuestion } from '../../data/apiCalls';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
-import ReactMarkdown from 'react-markdown';
+import MarkdownRenderer from '../shared/MarkdownRenderer';
 
 export default function GeneralQuestionsPage(): React.ReactElement {
   const [newQuestion, setNewQuestion] = useState<string>('');
@@ -69,32 +69,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
               {question}
             </Box>
             <Box sx={{ mt: 5 }}>
-              <ReactMarkdown
-                components={{
-                  p: ({ children }) => (
-                    <Typography variant="body1">{children}</Typography>
-                  ),
-                  h1: ({ children }) => (
-                    <Typography variant="h4" gutterBottom>
-                      {children}
-                    </Typography>
-                  ),
-                  h2: ({ children }) => (
-                    <Typography variant="h5" gutterBottom>
-                      {children}
-                    </Typography>
-                  ),
-                  li: ({ children }) => (
-                    <li>
-                      <Typography component="span">{children}</Typography>
-                    </li>
-                  ),
-                  strong: ({ children }) => <strong>{children}</strong>,
-                  em: ({ children }) => <em>{children}</em>,
-                }}
-              >
-                {answers[index]}
-              </ReactMarkdown>
+              <MarkdownRenderer content={answers[index]} />
             </Box>
           </Box>
         ))}
