@@ -13,6 +13,11 @@ export const fetchPets = async (): Promise<Pet[]> => {
 };
 
 export const askQuestion = async (question: string): Promise<string> => {
-  const response: AxiosResponse<string> = await dataService.post('OpenAI', { question });
+  const response: AxiosResponse<string> = await dataService.post('OpenAI', { question: question });
+  return response.data;
+};
+
+export const checkSymptoms = async (symptoms: string): Promise<string> => {
+  const response: AxiosResponse<string> = await dataService.post('SymptomChecker', { input: symptoms });
   return response.data;
 };
