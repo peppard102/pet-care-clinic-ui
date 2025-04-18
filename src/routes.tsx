@@ -5,8 +5,8 @@ const SymptomCheckerPage = lazy(() =>
 );
 const VetsPage = lazy(() => import('./components/vets/VetsPage'));
 const PetsPage = lazy(() => import('./components/pets/PetsPage'));
-const DiagnosticsPage = lazy(() =>
-	import('./components/diagnostics/DiagnosticsPage')
+const GeneralQuestionsPage = lazy(() =>
+	import('./components/diagnostics/GeneralQuestionsPage')
 );
 
 interface Route {
@@ -37,8 +37,8 @@ export const routes: Route[] = [
 		component: <PetsPage />,
 	},
 	{
-		label: 'Diagnostics',
-		href: '/diagnostics',
-		component: <DiagnosticsPage />,
+		label: 'General Questions',
+		href: '/generalQuestions',
+		component: <GeneralQuestionsPage />,
 	},
 ];
