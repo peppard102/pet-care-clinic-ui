@@ -28,7 +28,7 @@ export const routes: Route[] = [
   },
   {
     label: 'General Medical Questions',
-    href: '/generalQuestions',
+    href: '/general-questions',
     component: <GeneralQuestionsPage />,
   },
   {
