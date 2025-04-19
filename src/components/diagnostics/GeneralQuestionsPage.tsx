@@ -101,7 +101,6 @@ export default function GeneralQuestionsPage(): React.ReactElement {
             )}
           </Box>
         ))}
-
         {isError && (
           <Typography color="error">
             Error accessing general questions service. Try again later.
