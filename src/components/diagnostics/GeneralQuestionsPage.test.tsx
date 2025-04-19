@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 import { server } from '../../mocks/server';
 import { http, HttpResponse } from 'msw';
 
-describe('GeneralQuestionsPage Page', () => {
+describe('GeneralQuestionsPage', () => {
   test('A11y', async () => {
     const { axeTest } = customRender(<GeneralQuestionsPage />);
     await axeTest();
