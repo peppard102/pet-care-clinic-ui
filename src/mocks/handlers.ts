@@ -1,18 +1,18 @@
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { vetsMockData } from './mockData/vetsMockData';
 import { petsMockData } from './mockData/petsMockData';
 
 export const handlers = [
-  rest.post('*/SymptomChecker', (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json('This is a mock action plan.'))
-  ),
-  rest.post('*/OpenAI', (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json('This is a mock answer.'))
-  ),
-  rest.get('*/vets', (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json(vetsMockData))
-  ),
-  rest.get('*/pets', (_req, res, ctx) =>
-    res(ctx.status(200), ctx.json(petsMockData))
-  ),
+  http.post('*/SymptomChecker', () => {
+    return HttpResponse.json('This is a mock action plan.', { status: 200 });
+  }),
+  http.post('*/OpenAI', () => {
+    return HttpResponse.json('This is a mock answer.', { status: 200 });
+  }),
+  http.get('*/vets', () => {
+    return HttpResponse.json(vetsMockData, { status: 200 });
+  }),
+  http.get('*/pets', () => {
+    return HttpResponse.json(petsMockData, { status: 200 });
+  }),
 ];
