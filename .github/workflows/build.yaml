@@ -17,7 +17,9 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Install Snyk CLI
+        run: npm install -g snyk
       - name: Run Snyk to check for vulnerabilities
-        run: npm run snyk
+        run: snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
