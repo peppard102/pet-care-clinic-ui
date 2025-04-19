@@ -9,27 +9,46 @@ import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import MarkdownRenderer from '../shared/MarkdownRenderer';
 
+interface QuestionAnswer {
+  id: string;
+  question: string;
+  answer: string;
+  isLoading?: boolean;
+}
+
 export default function GeneralQuestionsPage(): React.ReactElement {
   const [newQuestion, setNewQuestion] = useState<string>('');
-  const [questions, setQuestions] = useState<string[]>([]);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [questionAnswers, setQuestionAnswers] = useState<QuestionAnswer[]>([]);
   const [isError, setIsError] = useState<boolean>(false);
 
   const submitQuestion = async (): Promise<void> => {
-    setQuestions((prev) => [...prev, newQuestion]);
+    const id = `qa-${Date.now()}`; // Generate a unique ID using timestamp
+
+    // Immediately add the question with loading state
+    setQuestionAnswers((prev) => [
+      ...prev,
+      { id, question: newQuestion, answer: '', isLoading: true },
+    ]);
+
     setNewQuestion('');
-    setIsProcessing(true);
     setIsError(false);
 
     try {
       const answer = await askQuestion(newQuestion);
-      setAnswers((prev) => [...prev, answer]);
+
+      // Update just the answer for this question
+      setQuestionAnswers((prev) =>
+        prev.map((qa) =>
+          qa.id === id ? { ...qa, answer, isLoading: false } : qa
+        )
+      );
     } catch {
       setIsError(true);
+      // Update the loading state even on error
+      setQuestionAnswers((prev) =>
+        prev.map((qa) => (qa.id === id ? { ...qa, isLoading: false } : qa))
+      );
     }
-
-    setIsProcessing(false);
   };
 
   return (
@@ -52,11 +71,12 @@ export default function GeneralQuestionsPage(): React.ReactElement {
         <Button variant="contained" onClick={submitQuestion} sx={{ mb: 2 }}>
           Submit question
         </Button>
-        {questions.map((question, index) => (
-          <Box>
+        {questionAnswers.map((qa) => (
+          <Box key={qa.id}>
             <Box
               sx={{
                 mt: 5,
+                mb: 3,
                 maxWidth: '900px',
                 border: '1px solid gray',
                 padding: '10px',
@@ -66,22 +86,22 @@ export default function GeneralQuestionsPage(): React.ReactElement {
               <Typography component="span" fontWeight="bold">
                 Question:
               </Typography>{' '}
-              {question}
+              {qa.question}
             </Box>
-            <Box sx={{ mt: 5 }}>
-              <MarkdownRenderer content={answers[index]} />
-            </Box>
+            {qa.isLoading ? (
+              <Skeleton
+                variant="rounded"
+                sx={{
+                  width: { xs: '90%', sm: 500 },
+                }}
+                height={60}
+              />
+            ) : (
+              <MarkdownRenderer content={qa.answer} />
+            )}
           </Box>
         ))}
-        {isProcessing && (
-          <Skeleton
-            variant="rounded"
-            sx={{
-              width: { xs: '90%', sm: 500 },
-            }}
-            height={60}
-          />
-        )}
+
         {isError && (
           <Typography color="error">
             Error accessing general questions service. Try again later.
