@@ -21,7 +21,7 @@ describe('Symptom Checker Page', () => {
     customRender(<SymptomCheckerPage />);
 
     // Input a question
-    const inputField = screen.getByLabelText(/Input the pets symptoms:/i);
+    const inputField = screen.getByLabelText(/Input the pet's symptoms:/i);
     await userEvent.type(inputField, 'Seizures');
 
     // Submit the question
@@ -48,7 +48,7 @@ describe('Symptom Checker Page', () => {
     customRender(<SymptomCheckerPage />);
 
     // Input a question
-    const inputField = screen.getByLabelText(/Input the pets symptoms:/i);
+    const inputField = screen.getByLabelText(/Input the pet's symptoms:/i);
     await userEvent.type(inputField, 'Seizures');
 
     // Submit the question

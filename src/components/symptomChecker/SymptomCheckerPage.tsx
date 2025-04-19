@@ -36,7 +36,7 @@ export default function SymptomCheckerPage() {
       >
         <TextField
           id="outlined-basic"
-          label="Input the pets symptoms:"
+          label="Input the pet's symptoms:"
           variant="outlined"
           multiline
           maxRows={8}
