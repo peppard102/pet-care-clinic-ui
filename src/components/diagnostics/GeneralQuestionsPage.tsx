@@ -8,6 +8,7 @@ import { askQuestion } from '../../data/apiCalls';
 import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import MarkdownRenderer from '../shared/MarkdownRenderer';
+import { v4 as uuidv4 } from 'uuid';
 
 interface QuestionAnswer {
   id: string;
@@ -22,7 +23,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
   const [isError, setIsError] = useState<boolean>(false);
 
   const submitQuestion = async (): Promise<void> => {
-    const id = `qa-${Date.now()}`; // Generate a unique ID using timestamp
+    const id = uuidv4(); // Generate a unique ID using UUID
 
     // Immediately add the question with loading state
     setQuestionAnswers((prev) => [
