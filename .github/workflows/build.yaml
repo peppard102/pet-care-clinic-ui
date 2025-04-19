@@ -18,8 +18,6 @@ jobs:
       - name: Build
         run: npm run build
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/node@master
-        with:
-          args: test
+        run: npm run snyk
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }
