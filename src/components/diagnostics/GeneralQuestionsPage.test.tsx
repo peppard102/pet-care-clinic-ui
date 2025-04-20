@@ -39,7 +39,10 @@ describe('GeneralQuestionsPage', () => {
   test('displays error message on API failure', async () => {
     server.use(
       http.post('*/OpenAI', () => {
-        return new HttpResponse(null, { status: 500 });
+        return HttpResponse.json(
+          { error: 'Internal Server Error' },
+          { status: 500 }
+        );
       })
     );
 

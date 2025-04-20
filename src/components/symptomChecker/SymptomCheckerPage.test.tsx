@@ -41,7 +41,10 @@ describe('Symptom Checker Page', () => {
   test('displays error message on API failure', async () => {
     server.use(
       http.post('*/SymptomChecker', () => {
-        return new HttpResponse(null, { status: 500 });
+        return HttpResponse.json(
+          { error: 'Internal Server Error' },
+          { status: 500 }
+        );
       })
     );
 
