@@ -2,7 +2,7 @@ name: Build
 on: [push]
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
@@ -17,3 +17,9 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Install Snyk CLI
+        run: npm install -g snyk
+      - name: Run Snyk to check for vulnerabilities
+        run: snyk test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

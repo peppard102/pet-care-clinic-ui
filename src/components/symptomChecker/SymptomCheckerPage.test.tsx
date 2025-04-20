@@ -4,7 +4,7 @@ import { customRender } from '../../mocks/customRender';
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { server } from '../../mocks/server';
-import { rest } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 describe('Symptom Checker Page', () => {
   test('A11y', async () => {
@@ -40,8 +40,11 @@ describe('Symptom Checker Page', () => {
 
   test('displays error message on API failure', async () => {
     server.use(
-      rest.post('*/SymptomChecker', (_req, res, ctx) => {
-        return res(ctx.status(500));
+      http.post('*/SymptomChecker', () => {
+        return HttpResponse.json(
+          { error: 'Internal Server Error' },
+          { status: 500 }
+        );
       })
     );
 
