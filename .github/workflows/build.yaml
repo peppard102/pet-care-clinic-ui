@@ -17,6 +17,8 @@ jobs:
         run: npm run lint
       - name: Build
         run: npm run build
+      - name: Docker
+        run: npm run docker:build
       - name: Install Snyk CLI
         run: npm install -g snyk
       - name: Run Snyk to check for vulnerabilities
