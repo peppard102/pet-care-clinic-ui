@@ -1,4 +1,4 @@
-import {defineConfig} from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -9,10 +9,10 @@ export default defineConfig({
       include: ['src/**/*.ts', 'src/**/*.tsx'],
       exclude: [
         'src/mocks/browser.ts',
-        'src/utils/testHelperFunctions.js',
+        'src/utils/testHelperFunctions.ts',
         'src/types/**',
         'src/vite-env.d.ts',
-        'src/main.tsx'
+        'src/main.tsx',
       ],
     },
   },
