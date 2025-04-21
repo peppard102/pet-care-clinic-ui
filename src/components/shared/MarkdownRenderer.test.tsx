@@ -20,7 +20,7 @@ describe('MarkdownRenderer', () => {
     expect(heading.tagName).toBe('H5');
   });
 
-  it('renders list items as li', () => {
+  it('renders list items inside li', () => {
     render(<MarkdownRenderer content={'- Item 1'} />);
     const listItem = screen.getByText('Item 1');
     expect(listItem.tagName).toBe('SPAN');
