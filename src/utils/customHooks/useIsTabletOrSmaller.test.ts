@@ -2,7 +2,7 @@ import { renderHook } from '@testing-library/react';
 import useIsTabletOrSmaller from './useIsTabletOrSmaller';
 import { changeScreenSize } from '../testHelperFunctions';
 
-describe('useIsMobile', () => {
+describe('useIsTabletOrSmaller', () => {
   it('returns true when screen is mobile', () => {
     changeScreenSize('400px');
 
