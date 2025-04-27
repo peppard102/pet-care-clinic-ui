@@ -21,6 +21,7 @@ export const askQuestion = async (
       questionAnswers,
     }
   );
+
   return response.data;
 };
 
@@ -29,5 +30,6 @@ export const checkSymptoms = async (symptoms: string): Promise<string> => {
     'SymptomChecker',
     { input: symptoms }
   );
+
   return response.data;
 };
