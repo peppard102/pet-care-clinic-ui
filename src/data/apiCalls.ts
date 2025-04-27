@@ -13,12 +13,12 @@ export const fetchPets = async (): Promise<Pet[]> => {
 };
 
 export const askQuestion = async (
-  questionAnswers: QuestionAnswer[]
+  conversationHistory: QuestionAnswer[]
 ): Promise<string> => {
   const response: AxiosResponse<string> = await dataService.post(
     'GeneralQuestions',
     {
-      questionAnswers,
+      conversationHistory,
     }
   );
 

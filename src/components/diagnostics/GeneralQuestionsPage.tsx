@@ -13,25 +13,27 @@ import { QuestionAnswer } from '../../types';
 
 export default function GeneralQuestionsPage(): React.ReactElement {
   const [newQuestion, setNewQuestion] = useState<string>('');
-  const [questionAnswers, setQuestionAnswers] = useState<QuestionAnswer[]>([]);
+  const [conversationHistory, setConversationHistory] = useState<
+    QuestionAnswer[]
+  >([]);
   const [isError, setIsError] = useState<boolean>(false);
 
   const submitQuestion = async (): Promise<void> => {
     const id = uuidv4(); // Generate a unique ID using UUID
-    const newQuestionAnswers: QuestionAnswer[] = [
-      ...questionAnswers,
+    const newConversationHistory: QuestionAnswer[] = [
+      ...conversationHistory,
       { id, question: newQuestion, answer: '', isLoading: true },
     ];
 
-    setQuestionAnswers(newQuestionAnswers);
+    setConversationHistory(newConversationHistory);
     setNewQuestion('');
     setIsError(false);
 
     try {
-      const answer = await askQuestion(newQuestionAnswers);
+      const answer = await askQuestion(newConversationHistory);
 
       // Update just the answer for this question
-      setQuestionAnswers((prev) =>
+      setConversationHistory((prev) =>
         prev.map((qa) =>
           qa.id === id ? { ...qa, answer, isLoading: false } : qa
         )
@@ -39,7 +41,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
     } catch {
       setIsError(true);
       // Update the loading state even on error
-      setQuestionAnswers((prev) =>
+      setConversationHistory((prev) =>
         prev.map((qa) => (qa.id === id ? { ...qa, isLoading: false } : qa))
       );
     }
@@ -50,7 +52,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        {questionAnswers.map((qa) => (
+        {conversationHistory.map((qa) => (
           <Box key={qa.id}>
             <Box
               sx={{
