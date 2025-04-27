@@ -1,6 +1,6 @@
 import dataService from './dataService';
 import { AxiosResponse } from 'axios';
-import { Pet, Vet } from '../types';
+import { Pet, QuestionAnswer, Vet } from '../types';
 
 export const fetchVets = async (): Promise<Vet[]> => {
   const response: AxiosResponse<Vet[]> = await dataService.get('Vets');
@@ -12,11 +12,13 @@ export const fetchPets = async (): Promise<Pet[]> => {
   return response.data;
 };
 
-export const askQuestion = async (question: string): Promise<string> => {
+export const askQuestion = async (
+  questionAnswers: QuestionAnswer[]
+): Promise<string> => {
   const response: AxiosResponse<string> = await dataService.post(
     'GeneralQuestions',
     {
-      question,
+      questionAnswers,
     }
   );
   return response.data;

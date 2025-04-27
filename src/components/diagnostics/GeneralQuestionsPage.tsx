@@ -9,13 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import React from 'react';
 import MarkdownRenderer from '../shared/MarkdownRenderer';
 import { v4 as uuidv4 } from 'uuid';
-
-interface QuestionAnswer {
-  id: string;
-  question: string;
-  answer: string;
-  isLoading?: boolean;
-}
+import { QuestionAnswer } from '../../types';
 
 export default function GeneralQuestionsPage(): React.ReactElement {
   const [newQuestion, setNewQuestion] = useState<string>('');
@@ -24,18 +18,17 @@ export default function GeneralQuestionsPage(): React.ReactElement {
 
   const submitQuestion = async (): Promise<void> => {
     const id = uuidv4(); // Generate a unique ID using UUID
-
-    // Immediately add the question with loading state
-    setQuestionAnswers((prev) => [
-      ...prev,
+    const newQuestionAnswers: QuestionAnswer[] = [
+      ...questionAnswers,
       { id, question: newQuestion, answer: '', isLoading: true },
-    ]);
+    ];
 
+    setQuestionAnswers(newQuestionAnswers);
     setNewQuestion('');
     setIsError(false);
 
     try {
-      const answer = await askQuestion(newQuestion);
+      const answer = await askQuestion(newQuestionAnswers);
 
       // Update just the answer for this question
       setQuestionAnswers((prev) =>
@@ -57,26 +50,10 @@ export default function GeneralQuestionsPage(): React.ReactElement {
       <Box
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
-        <TextField
-          id="outlined-basic"
-          label="Input your medical question:"
-          variant="outlined"
-          multiline
-          maxRows={8}
-          value={newQuestion}
-          sx={{ minWidth: { xs: '300px', sm: '500px', md: '600px' }, mb: 2 }}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setNewQuestion(event.target.value)
-          }
-        />
-        <Button variant="contained" onClick={submitQuestion} sx={{ mb: 2 }}>
-          Submit question
-        </Button>
         {questionAnswers.map((qa) => (
           <Box key={qa.id}>
             <Box
               sx={{
-                mt: 5,
                 mb: 3,
                 maxWidth: '900px',
                 border: '1px solid gray',
@@ -98,7 +75,9 @@ export default function GeneralQuestionsPage(): React.ReactElement {
                 height={60}
               />
             ) : (
-              <MarkdownRenderer content={qa.answer} />
+              <Box sx={{ px: 4, mb: 3 }}>
+                <MarkdownRenderer content={qa.answer} />
+              </Box>
             )}
           </Box>
         ))}
@@ -107,6 +86,25 @@ export default function GeneralQuestionsPage(): React.ReactElement {
             Error accessing general questions service. Try again later.
           </Typography>
         )}
+        <TextField
+          id="outlined-basic"
+          label="Input your medical question:"
+          variant="outlined"
+          multiline
+          maxRows={8}
+          value={newQuestion}
+          sx={{
+            minWidth: { xs: '300px', sm: '500px', md: '600px' },
+            mt: 6,
+            mb: 2,
+          }}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setNewQuestion(event.target.value)
+          }
+        />
+        <Button variant="contained" onClick={submitQuestion} sx={{ mb: 2 }}>
+          Submit question
+        </Button>
       </Box>
     </PageContainer>
   );
