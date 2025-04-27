@@ -21,3 +21,10 @@ export interface Pet extends BaseIndividual {
 export interface Vet extends BaseIndividual {
   specialization: string;
 }
+
+export interface QuestionAnswer {
+  id: string;
+  question: string;
+  answer: string;
+  isLoading?: boolean;
+}

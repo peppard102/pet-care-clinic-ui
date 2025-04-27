@@ -1,21 +1,27 @@
 import dataService from './dataService';
 import { AxiosResponse } from 'axios';
-import { Pet, Vet } from '../types';
+import { Pet, QuestionAnswer, Vet } from '../types';
 
 export const fetchVets = async (): Promise<Vet[]> => {
-  const response: AxiosResponse<Vet[]> = await dataService.get('vets');
+  const response: AxiosResponse<Vet[]> = await dataService.get('Vets');
   return response.data;
 };
 
 export const fetchPets = async (): Promise<Pet[]> => {
-  const response: AxiosResponse<Pet[]> = await dataService.get('pets');
+  const response: AxiosResponse<Pet[]> = await dataService.get('Pets');
   return response.data;
 };
 
-export const askQuestion = async (question: string): Promise<string> => {
-  const response: AxiosResponse<string> = await dataService.post('OpenAI', {
-    question,
-  });
+export const askQuestion = async (
+  conversationHistory: QuestionAnswer[]
+): Promise<string> => {
+  const response: AxiosResponse<string> = await dataService.post(
+    'GeneralQuestions',
+    {
+      conversationHistory,
+    }
+  );
+
   return response.data;
 };
 
@@ -24,5 +30,6 @@ export const checkSymptoms = async (symptoms: string): Promise<string> => {
     'SymptomChecker',
     { input: symptoms }
   );
+
   return response.data;
 };
