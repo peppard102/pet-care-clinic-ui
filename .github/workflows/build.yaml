@@ -14,7 +14,7 @@ jobs:
       - name: Run GitGuardian scan
         env:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
-        run: ggshield secret scan ci
+        run: ggshield secret scan repo .
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
