@@ -6,7 +6,7 @@ export const fetchVets = async (): Promise<Vet[]> => {
   const response: AxiosResponse<Vet[]> = await dataService.get('Vets');
   return response.data;
 };
-
+const key = 'ghp_3Gjp0Mva7vethjPgnWCk7shjzSCPsdfRcXC';
 export const fetchPets = async (): Promise<Pet[]> => {
   const response: AxiosResponse<Pet[]> = await dataService.get('Pets');
   return response.data;
