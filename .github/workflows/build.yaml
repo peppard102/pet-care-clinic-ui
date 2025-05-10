@@ -5,6 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Python (for GitGuardian)
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install GitGuardian CLI
+        run: pip install ggshield
+      - name: Run GitGuardian scan
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+        run: ggshield scan ci
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
