@@ -1,17 +1,55 @@
 import { test, expect } from '@playwright/test';
 
-test('Has title', async ({ page }) => {
-  await page.goto('/');
+test.describe('Symptom Checker Page', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto('/');
+  });
 
-  // Validate page title
-  await expect(page).toHaveTitle(/Pet Care Clinic/);
-});
+  test('Has title', async ({ page }) => {
+    // Validate page title
+    await expect(page).toHaveTitle(/Pet Care Clinic/);
+  });
 
-test('Has heading', async ({ page }) => {
-  await page.goto('/');
+  test('Has heading', async ({ page }) => {
+    // Validate heading visibility
+    await expect(
+      page.getByRole('heading', { name: 'Symptom Checker' })
+    ).toBeVisible();
+  });
 
-  // Validate heading visibility
-  await expect(
-    page.getByRole('heading', { name: 'Symptom Checker' })
-  ).toBeVisible();
+  test('should display all form elements', async ({ page }) => {
+    // Check input field
+    await expect(page.getByLabel("Input the pet's symptoms:")).toBeVisible();
+
+    // Check submit button
+    await expect(
+      page.getByRole('button', { name: 'Get action plan' })
+    ).toBeVisible();
+  });
+
+  test('should allow entering and submitting symptoms', async ({ page }) => {
+    const symptomsInput = page.getByLabel("Input the pet's symptoms:");
+    const submitButton = page.getByRole('button', { name: 'Get action plan' });
+    const testSymptoms = 'The dog is limping';
+
+    await symptomsInput.fill(testSymptoms);
+    await expect(symptomsInput).toHaveValue(testSymptoms);
+
+    await submitButton.click();
+
+    // Brief wait to allow for any processing
+    await page.waitForTimeout(200);
+  });
+
+  test('should be accessible via keyboard navigation', async ({ page }) => {
+    // Tab to the input field
+    await page.keyboard.press('Tab');
+    await expect(page.getByLabel("Input the pet's symptoms:")).toBeFocused();
+
+    // Tab to the button
+    await page.keyboard.press('Tab');
+    await expect(
+      page.getByRole('button', { name: 'Get action plan' })
+    ).toBeFocused();
+  });
 });
