@@ -27,8 +27,7 @@ test.describe('Symptom Checker Page', () => {
 
     await submitButton.click();
 
-    // Brief wait to allow for any processing
-    await page.waitForTimeout(200);
+    await page.locator('p').first().waitFor({ state: 'visible' });
   });
 
   test('should support multiline input', async ({ page }) => {
