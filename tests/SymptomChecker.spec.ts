@@ -26,8 +26,7 @@ test.describe('Symptom Checker Page', () => {
     await expect(symptomsInput).toHaveValue(testSymptoms);
 
     await submitButton.click();
-
-    await page.locator('p').first().waitFor({ state: 'visible' });
+    await expect(page.locator('p').first()).toBeVisible();
   });
 
   test('should support multiline input', async ({ page }) => {
