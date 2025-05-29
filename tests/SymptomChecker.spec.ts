@@ -33,8 +33,8 @@ test.describe('Symptom Checker Page', () => {
   test('should support multiline input', async ({ page }) => {
     const symptomsInput = page.getByLabel("Input the pet's symptoms:");
     const multilineSymptoms = `Symptom 1: Loss of appetite
-Symptom 2: Lethargy
-Symptom 3: Excessive thirst`;
+      Symptom 2: Lethargy
+      Symptom 3: Excessive thirst`;
 
     await symptomsInput.fill(multilineSymptoms);
     await expect(symptomsInput).toHaveValue(multilineSymptoms);
