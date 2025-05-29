@@ -41,6 +41,16 @@ test.describe('Symptom Checker Page', () => {
     await page.waitForTimeout(200);
   });
 
+  test('should support multiline input', async ({ page }) => {
+    const symptomsInput = page.getByLabel("Input the pet's symptoms:");
+    const multilineSymptoms = `Symptom 1: Loss of appetite
+Symptom 2: Lethargy
+Symptom 3: Excessive thirst`;
+
+    await symptomsInput.fill(multilineSymptoms);
+    await expect(symptomsInput).toHaveValue(multilineSymptoms);
+  });
+
   test('should be accessible via keyboard navigation', async ({ page }) => {
     // Tab to the input field
     await page.keyboard.press('Tab');
