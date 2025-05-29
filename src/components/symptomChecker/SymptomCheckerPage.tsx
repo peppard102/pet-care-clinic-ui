@@ -45,6 +45,7 @@ export default function SymptomCheckerPage() {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setSymptoms(event.target.value)
           }
+          autoFocus
         />
         <Button variant="contained" onClick={submitSymptoms} sx={{ mb: 2 }}>
           Get action plan

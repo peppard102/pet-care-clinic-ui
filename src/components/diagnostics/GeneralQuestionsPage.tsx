@@ -103,6 +103,7 @@ export default function GeneralQuestionsPage(): React.ReactElement {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setNewQuestion(event.target.value)
           }
+          autoFocus
         />
         <Button variant="contained" onClick={submitQuestion} sx={{ mb: 2 }}>
           Submit question
