@@ -17,16 +17,6 @@ test.describe('Symptom Checker Page', () => {
     ).toBeVisible();
   });
 
-  test('should display all form elements', async ({ page }) => {
-    // Check input field
-    await expect(page.getByLabel("Input the pet's symptoms:")).toBeVisible();
-
-    // Check submit button
-    await expect(
-      page.getByRole('button', { name: 'Get action plan' })
-    ).toBeVisible();
-  });
-
   test('should allow entering and submitting symptoms', async ({ page }) => {
     const symptomsInput = page.getByLabel("Input the pet's symptoms:");
     const submitButton = page.getByRole('button', { name: 'Get action plan' });
