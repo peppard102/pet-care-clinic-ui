@@ -42,10 +42,11 @@ const columns: GridColDef[] = [
     editable: true,
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
-    sortable: false,
-    width: 160,
+    field: 'formattedAddress',
+    headerName: 'Address',
+    description: 'The address of the vet',
+    sortable: true,
+    width: 360,
   },
 ];
 

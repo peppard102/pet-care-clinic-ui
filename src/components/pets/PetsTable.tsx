@@ -30,12 +30,6 @@ const columns: GridColDef[] = [
     editable: true,
   },
   {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'Full name',
-    width: 160,
-  },
-  {
     field: 'formattedAddress',
     headerName: 'Address',
     description: 'The address of the pet',

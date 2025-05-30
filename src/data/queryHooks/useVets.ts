@@ -2,18 +2,27 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { fetchVets } from '../apiCalls';
 import { QueryKey } from './QueryKeys';
 import { Vet } from '../../types';
+import { formatAddress } from '../../utils/helperFunctions';
 
 // Query for the list of vets.
 const useVets = (): FormattedVet[] => {
-	const { data } = useSuspenseQuery<Vet[]>({
-		queryKey: [QueryKey.GET_VETS],
-		queryFn: fetchVets
-	});
+  const { data } = useSuspenseQuery({
+    queryKey: [QueryKey.GET_VETS],
+    queryFn: fetchVets,
+    select: (data) =>
+      data.map((vet) => ({
+        ...vet,
+        formattedAddress: formatAddress(
+          vet?.address.street,
+          vet?.address.city,
+          vet?.address.state,
+          vet?.address.zipCode
+        ),
+        fullName: `${vet?.firstName || ''} ${vet?.lastName || ''}`,
+      })),
+  });
 
-	return data.map((vet: Vet): FormattedVet => ({
-		...vet,
-		fullName: `${vet.firstName} ${vet.lastName}`,
-	}));
+  return data;
 };
 
 interface FormattedVet extends Vet {

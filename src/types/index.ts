@@ -16,7 +16,6 @@ export interface BaseIndividual {
 }
 
 export interface Pet extends BaseIndividual {
-  address: Address;
   dateOfBirth: Date;
 }
 
