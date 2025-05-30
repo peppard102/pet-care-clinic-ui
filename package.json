@@ -24,7 +24,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^7.0.2",
     "@mui/material": "^7.0.2",
-    "@mui/x-data-grid": "^7.28.3",
+    "@mui/x-data-grid": "^7.29.0",
     "@pc/pet-clinic-components": "file:peppard102-pet-clinic-components-0.0.0-test-3.tgz",
     "@tanstack/react-query": "^5.73.3",
     "axios": "^1.8.4",
