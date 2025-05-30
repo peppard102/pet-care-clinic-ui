@@ -23,9 +23,9 @@ const columns: GridColDef[] = [
     editable: true,
   },
   {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
+    field: 'dateOfBirth',
+    headerName: 'Date of birth',
+    type: 'date',
     width: 110,
     editable: true,
   },

@@ -30,8 +30,8 @@ describe('PetsSearch Component', () => {
     expect(screen.getByText('Name:')).toBeInTheDocument();
     expect(screen.getByText('Sophie Snow')).toBeInTheDocument();
 
-    expect(screen.getByText('Age:')).toBeInTheDocument();
-    expect(screen.getByText('15')).toBeInTheDocument();
+    expect(screen.getByText('Date of birth:')).toBeInTheDocument();
+    expect(screen.getByText('3/14/2009')).toBeInTheDocument();
 
     expect(screen.getByText('Address:')).toBeInTheDocument();
     expect(
