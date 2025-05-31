@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { startOfTomorrow } from 'date-fns';
 
 interface AddPetProps {
   open: boolean;
@@ -46,7 +47,7 @@ const validationSchema = Yup.object({
     .required('Last name is required'),
   dateOfBirth: Yup.date()
     .typeError('Date of birth must be a valid date')
-    .max(new Date(), 'Date of birth cannot be in the future')
+    .max(startOfTomorrow(), 'Date of birth cannot be in the future')
     .required('Date of birth is required'),
   vet: Yup.string().required('Vet is required'),
 });
