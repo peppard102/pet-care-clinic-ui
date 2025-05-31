@@ -47,10 +47,7 @@ const validationSchema = Yup.object({
     .required('Last name is required'),
   dateOfBirth: Yup.date()
     .typeError('Date of birth must be a valid date')
-    .min(
-      new Date('1900-01-01T00:00:00.0000000'),
-      'Date of birth must be after 01/01/1900'
-    )
+    .min(new Date('1900-01-01'), 'Date of birth must be after 01/01/1900')
     .max(startOfTomorrow(), 'Date of birth cannot be in the future')
     .required('Date of birth is required'),
   vet: Yup.string().required('Vet is required'),
