@@ -5,29 +5,25 @@ import { formatAddress } from '../../utils/helperFunctions';
 import { Pet } from '../../types';
 
 // Query for the list of pets.
-const usePets = (): FormattedPet[] => {
-	const { data } = useSuspenseQuery<Pet[]>({
-		queryKey: [QueryKey.GET_PETS],
-		queryFn: fetchPets
-	});
+const usePets = (): Pet[] => {
+  const { data } = useSuspenseQuery({
+    queryKey: [QueryKey.GET_PETS],
+    queryFn: fetchPets,
+    select: (data) =>
+      data.map((pet) => ({
+        ...pet,
+        dateOfBirth: new Date(pet.dateOfBirth),
+        formattedAddress: formatAddress(
+          pet?.address.street,
+          pet?.address.city,
+          pet?.address.state,
+          pet?.address.zipCode
+        ),
+        fullName: `${pet?.firstName || ''} ${pet?.lastName || ''}`,
+      })),
+  });
 
-	return (
-		data?.map((pet: Pet): FormattedPet => ({
-			...pet,
-			formattedAddress: formatAddress(
-				pet?.address.street,
-				pet?.address.city,
-				pet?.address.state,
-				pet?.address.zipCode
-			),
-			fullName: `${pet?.firstName || ''} ${pet?.lastName || ''}`,
-		})) || []
-	);
+  return data || [];
 };
-
-interface FormattedPet extends Pet {
-  formattedAddress: string;
-  fullName: string;
-}
 
 export default usePets;

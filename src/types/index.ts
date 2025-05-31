@@ -11,15 +11,16 @@ export interface BaseIndividual {
   id: number;
   firstName: string;
   lastName: string;
-  age: number;
+  formattedAddress: string;
+  fullName: string;
 }
 
 export interface Pet extends BaseIndividual {
-  address: Address;
+  dateOfBirth: Date;
 }
 
 export interface Vet extends BaseIndividual {
-  specialization: string;
+  specialty: string;
 }
 
 export interface QuestionAnswer {
@@ -28,3 +29,19 @@ export interface QuestionAnswer {
   answer: string;
   isLoading?: boolean;
 }
+
+export type PetApiResponse = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: Address;
+  dateOfBirth: string;
+};
+
+export type VetApiResponse = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: Address;
+  specialty: string;
+};
