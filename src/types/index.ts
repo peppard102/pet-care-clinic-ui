@@ -29,3 +29,19 @@ export interface QuestionAnswer {
   answer: string;
   isLoading?: boolean;
 }
+
+export type PetApiResponse = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: Address;
+  dateOfBirth: string;
+};
+
+export type VetApiResponse = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  address: Address;
+  specialty: string;
+};

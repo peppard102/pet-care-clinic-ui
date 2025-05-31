@@ -1,22 +1,6 @@
 import dataService from './dataService';
 import { AxiosResponse } from 'axios';
-import { QuestionAnswer, Address } from '../types';
-
-export type PetApiResponse = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  address: Address;
-  dateOfBirth: string;
-};
-
-export type VetApiResponse = {
-  id: number;
-  firstName: string;
-  lastName: string;
-  address: Address;
-  specialty: string;
-};
+import { QuestionAnswer, PetApiResponse, VetApiResponse } from '../types';
 
 export const fetchVets = async (): Promise<VetApiResponse[]> => {
   const response: AxiosResponse<VetApiResponse[]> = await dataService.get(

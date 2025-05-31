@@ -1,4 +1,4 @@
-import { VetApiResponse } from '../../data/apiCalls';
+import { VetApiResponse } from '../../types';
 
 export const vetsMockData: VetApiResponse[] = [
   {
