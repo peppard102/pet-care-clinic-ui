@@ -47,6 +47,10 @@ const validationSchema = Yup.object({
     .required('Last name is required'),
   dateOfBirth: Yup.date()
     .typeError('Date of birth must be a valid date')
+    .min(
+      new Date('1900-01-01T00:00:00.0000000'),
+      'Date of birth must be after 01/01/1900'
+    )
     .max(startOfTomorrow(), 'Date of birth cannot be in the future')
     .required('Date of birth is required'),
   vet: Yup.string().required('Vet is required'),
@@ -103,6 +107,7 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
               onChange={(newValue) => {
                 formik.setFieldValue('dateOfBirth', newValue);
               }}
+              maxDate={new Date()}
               slotProps={{
                 textField: {
                   error:
@@ -111,7 +116,9 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
                     formik.touched.dateOfBirth && formik.errors.dateOfBirth
                       ? String(formik.errors.dateOfBirth)
                       : '',
-                  onBlur: formik.handleBlur,
+                  onBlur: () => {
+                    formik.setFieldTouched('dateOfBirth', true, true);
+                  },
                   name: 'dateOfBirth',
                   sx: { mb: 4, width: '100%' },
                 },
