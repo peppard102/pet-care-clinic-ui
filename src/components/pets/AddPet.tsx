@@ -5,7 +5,8 @@ import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import { useFormik } from 'formik';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -20,17 +21,17 @@ interface AddPetProps {
   setOpen: (open: boolean) => void;
 }
 
-interface PetFormValues {
+type PetFormValues = {
   firstName: string;
   lastName: string;
   vet: string;
   dateOfBirth: Date;
   street: string;
-  apartmentNumber: string;
+  apartmentNumber?: string;
   city: string;
   state: string;
   zipCode: string;
-}
+};
 
 const style = {
   position: 'absolute',
@@ -73,8 +74,14 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
   const handleClose = (): void => setOpen(false);
   const vets = useVetsDropdownData();
 
-  const formik = useFormik<PetFormValues>({
-    initialValues: {
+  const {
+    control,
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<PetFormValues>({
+    resolver: yupResolver(validationSchema) as any, // Type assertion to handle Yup schema typing
+    defaultValues: {
       firstName: '',
       lastName: '',
       vet: '',
@@ -85,11 +92,14 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
       state: '',
       zipCode: '',
     },
-    validationSchema,
-    onSubmit: (values: PetFormValues) => {
-      alert(JSON.stringify(values, null, 2)); // TODO: replace with post request
-    },
+    mode: 'onBlur', // Validate on blur
+    reValidateMode: 'onChange', // Re-validate on change after blur
+    criteriaMode: 'firstError', // Only show first error per field
   });
+
+  const onSubmit: SubmitHandler<PetFormValues> = (data) => {
+    alert(JSON.stringify(data, null, 2)); // TODO: replace with post request
+  };
 
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
@@ -97,155 +107,160 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
         <Typography id="modal-title" variant="h6" component="h2" mb={3}>
           Add a new pet:
         </Typography>
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="firstName"
                 label="Pet first name"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.firstName && !!formik.errors.firstName}
-                helperText={formik.touched.firstName && formik.errors.firstName}
+                {...register('firstName', { shouldUnregister: true })}
+                error={!!errors.firstName}
+                helperText={errors.firstName?.message}
                 fullWidth
+                variant="outlined"
+                margin="normal"
               />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="lastName"
                 label="Pet last name"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.lastName && !!formik.errors.lastName}
-                helperText={formik.touched.lastName && formik.errors.lastName}
+                {...register('lastName', { shouldUnregister: true })}
+                error={!!errors.lastName}
+                helperText={errors.lastName?.message}
                 fullWidth
+                variant="outlined"
+                margin="normal"
               />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  label="Date of birth"
-                  value={formik.values.dateOfBirth}
-                  onChange={(newValue) => {
-                    formik.setFieldValue('dateOfBirth', newValue);
-                  }}
-                  maxDate={new Date()}
-                  slotProps={{
-                    textField: {
-                      error:
-                        formik.touched.dateOfBirth &&
-                        !!formik.errors.dateOfBirth,
-                      helperText:
-                        formik.touched.dateOfBirth && formik.errors.dateOfBirth
-                          ? String(formik.errors.dateOfBirth)
-                          : '',
-                      onBlur: () => {
-                        formik.setFieldTouched('dateOfBirth', true, true);
-                      },
-                      name: 'dateOfBirth',
-                      sx: { width: '100%' },
-                    },
-                  }}
+                <Controller
+                  name="dateOfBirth"
+                  control={control}
+                  render={({ field: { ref, ...field }, fieldState }) => (
+                    <DatePicker
+                      label="Date of birth"
+                      inputRef={ref}
+                      {...field}
+                      slotProps={{
+                        textField: {
+                          error: !!fieldState.error,
+                          helperText: fieldState.error?.message,
+                          fullWidth: true,
+                          variant: 'outlined',
+                          margin: 'normal',
+                        },
+                      }}
+                    />
+                  )}
                 />
               </LocalizationProvider>
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <FormControl fullWidth>
-                <TextField
-                  id="vet"
+                <Controller
                   name="vet"
-                  label="Vet"
-                  value={formik.values.vet}
-                  onChange={formik.handleChange}
-                  error={formik.touched.vet && !!formik.errors.vet}
-                  helperText={formik.touched.vet && formik.errors.vet}
-                  select
-                >
-                  {vets.map((vet) => (
-                    <MenuItem key={vet.id} value={vet.id}>
-                      {vet.fullName}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  control={control}
+                  render={({ field: { ref, ...field }, fieldState }) => (
+                    <TextField
+                      inputRef={ref}
+                      select
+                      label="Vet"
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                      fullWidth
+                      variant="outlined"
+                      margin="normal"
+                      {...field}
+                    >
+                      <MenuItem value="">
+                        <em>Select a vet</em>
+                      </MenuItem>
+                      {vets.map((vet) => (
+                        <MenuItem key={vet.id} value={vet.id}>
+                          {vet.fullName}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  )}
+                />
               </FormControl>
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="street"
                 label="Street Address"
-                value={formik.values.street}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.street && !!formik.errors.street}
-                helperText={formik.touched.street && formik.errors.street}
+                {...register('street', { shouldUnregister: true })}
+                error={!!errors.street}
+                helperText={errors.street?.message}
                 fullWidth
+                variant="outlined"
+                margin="normal"
               />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="apartmentNumber"
                 label="Apt/Suite (Optional)"
-                value={formik.values.apartmentNumber}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={
-                  formik.touched.apartmentNumber &&
-                  !!formik.errors.apartmentNumber
-                }
-                helperText={
-                  formik.touched.apartmentNumber &&
-                  formik.errors.apartmentNumber
-                }
+                {...register('apartmentNumber', { shouldUnregister: true })}
+                error={!!errors.apartmentNumber}
+                helperText={errors.apartmentNumber?.message}
                 fullWidth
+                variant="outlined"
+                margin="normal"
               />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="city"
                 label="City"
-                value={formik.values.city}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.city && !!formik.errors.city}
-                helperText={formik.touched.city && formik.errors.city}
+                {...register('city', { shouldUnregister: true })}
+                error={!!errors.city}
+                helperText={errors.city?.message}
                 fullWidth
+                variant="outlined"
+                margin="normal"
               />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
-              <TextField
-                id="state"
+              <Controller
                 name="state"
-                select
-                label="State"
-                value={formik.values.state}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.state && !!formik.errors.state}
-                helperText={formik.touched.state && formik.errors.state}
-                fullWidth
-              >
-                <MenuItem value="">
-                  <em>Select a state</em>
-                </MenuItem>
-                {US_STATES.map((state) => (
-                  <MenuItem key={state.abbreviation} value={state.name}>
-                    {state.name}
-                  </MenuItem>
-                ))}
-              </TextField>
+                control={control}
+                render={({ field: { ref, ...field }, fieldState }) => (
+                  <TextField
+                    inputRef={ref}
+                    select
+                    label="State"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                    fullWidth
+                    variant="outlined"
+                    margin="normal"
+                    {...field}
+                  >
+                    <MenuItem value="">
+                      <em>Select a state</em>
+                    </MenuItem>
+                    {US_STATES.map((state) => (
+                      <MenuItem key={state.abbreviation} value={state.name}>
+                        {state.name}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                )}
+              />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="zipCode"
                 label="Zip Code"
-                value={formik.values.zipCode}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.zipCode && !!formik.errors.zipCode}
-                helperText={formik.touched.zipCode && formik.errors.zipCode}
+                {...register('zipCode', { shouldUnregister: true })}
+                error={!!errors.zipCode}
+                helperText={errors.zipCode?.message}
                 fullWidth
+                variant="outlined"
+                margin="normal"
               />
             </Grid>
           </Grid>
