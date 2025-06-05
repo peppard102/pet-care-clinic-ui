@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import useVets from '../../data/queryHooks/useVets';
+import useVets from '../../data/queryHooks/useVetsTableData';
 import PageContainer from '../shared/PageContainer';
 import Button from '@pc/pet-clinic-components/Button';
 import Typography from '@mui/material/Typography';

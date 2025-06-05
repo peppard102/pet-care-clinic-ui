@@ -38,10 +38,15 @@ export type PetApiResponse = {
   dateOfBirth: string;
 };
 
-export type VetApiResponse = {
+export type VetTableApiResponse = {
   id: number;
   firstName: string;
   lastName: string;
   address: Address;
   specialty: string;
+};
+
+export type VetDropdownApiResponse = {
+  id: number;
+  fullName: string;
 };

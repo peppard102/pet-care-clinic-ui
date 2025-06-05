@@ -1,11 +1,24 @@
 import dataService from './dataService';
 import { AxiosResponse } from 'axios';
-import { QuestionAnswer, PetApiResponse, VetApiResponse } from '../types';
+import {
+  QuestionAnswer,
+  PetApiResponse,
+  VetTableApiResponse,
+  VetDropdownApiResponse,
+} from '../types';
 
-export const fetchVets = async (): Promise<VetApiResponse[]> => {
-  const response: AxiosResponse<VetApiResponse[]> = await dataService.get(
+export const fetchVetsTableData = async (): Promise<VetTableApiResponse[]> => {
+  const response: AxiosResponse<VetTableApiResponse[]> = await dataService.get(
     'Vets'
   );
+  return response.data;
+};
+
+export const fetchVetsDropdownData = async (): Promise<
+  VetDropdownApiResponse[]
+> => {
+  const response: AxiosResponse<VetDropdownApiResponse[]> =
+    await dataService.get('Vets/dropdown');
   return response.data;
 };
 

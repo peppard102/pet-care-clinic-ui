@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import useVets from '../../data/queryHooks/useVets';
+import useVetsDropdownData from '../../data/queryHooks/useVetsDropdownData';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
@@ -13,6 +13,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { startOfTomorrow } from 'date-fns';
 import Grid from '@mui/material/Grid';
+import { US_STATES } from '../../utils/constants';
 
 interface AddPetProps {
   open: boolean;
@@ -59,9 +60,7 @@ const validationSchema = Yup.object({
   street: Yup.string().required('Street is required'),
   apartmentNumber: Yup.string(),
   city: Yup.string().required('City is required'),
-  state: Yup.string()
-    .required('State is required')
-    .matches(/^[A-Z]{2}$/, 'Must be a valid 2-letter state code'),
+  state: Yup.string().required('State is required'),
   zipCode: Yup.string()
     .required('Zip code is required')
     .matches(
@@ -72,7 +71,7 @@ const validationSchema = Yup.object({
 
 export default function AddPet({ open, setOpen }: AddPetProps) {
   const handleClose = (): void => setOpen(false);
-  const vets = useVets();
+  const vets = useVetsDropdownData();
 
   const formik = useFormik<PetFormValues>({
     initialValues: {
@@ -217,20 +216,25 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 id="state"
+                name="state"
+                select
                 label="State"
                 value={formik.values.state}
-                onChange={(e) => {
-                  formik.setFieldValue('state', e.target.value.toUpperCase());
-                }}
+                onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.state && !!formik.errors.state}
-                helperText={
-                  (formik.touched.state && formik.errors.state) ||
-                  '2-letter code'
-                }
-                inputProps={{ maxLength: 2 }}
+                helperText={formik.touched.state && formik.errors.state}
                 fullWidth
-              />
+              >
+                <MenuItem value="">
+                  <em>Select a state</em>
+                </MenuItem>
+                {US_STATES.map((state) => (
+                  <MenuItem key={state.abbreviation} value={state.name}>
+                    {state.name}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField

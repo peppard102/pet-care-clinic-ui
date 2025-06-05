@@ -1,6 +1,6 @@
-import { VetApiResponse } from '../../types';
+import { VetTableApiResponse } from '../../types';
 
-export const vetsMockData: VetApiResponse[] = [
+export const vetsMockData: VetTableApiResponse[] = [
   {
     id: 1,
     lastName: 'Snow',

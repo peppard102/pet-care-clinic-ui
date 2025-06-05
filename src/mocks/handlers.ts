@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { vetsMockData } from './mockData/vetsMockData';
+import { vetsMockData } from './mockData/vetsTableMockData';
 import { petsMockData } from './mockData/petsMockData';
+import { vetsDropdownMockData } from './mockData/vetsDropdownMockData';
 
 export const handlers = [
   http.post('*/SymptomChecker', () => {
@@ -11,6 +12,9 @@ export const handlers = [
   }),
   http.get('*/Vets', () => {
     return HttpResponse.json(vetsMockData, { status: 200 });
+  }),
+  http.get('*/Vets/dropdown', () => {
+    return HttpResponse.json(vetsDropdownMockData, { status: 200 });
   }),
   http.get('*/Pets', () => {
     return HttpResponse.json(petsMockData, { status: 200 });

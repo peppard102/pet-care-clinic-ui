@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { fetchVets } from '../apiCalls';
+import { fetchVetsTableData } from '../apiCalls';
 import { QueryKey } from './QueryKeys';
 import { Vet } from '../../types';
 import { formatAddress } from '../../utils/helperFunctions';
@@ -8,7 +8,7 @@ import { formatAddress } from '../../utils/helperFunctions';
 const useVets = (): FormattedVet[] => {
   const { data } = useSuspenseQuery({
     queryKey: [QueryKey.GET_VETS],
-    queryFn: fetchVets,
+    queryFn: fetchVetsTableData,
     select: (data) =>
       data.map((vet) => ({
         ...vet,
