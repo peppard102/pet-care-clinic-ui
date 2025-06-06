@@ -5,7 +5,7 @@ import Modal from '@mui/material/Modal';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Button from '@mui/material/Button';
@@ -80,8 +80,8 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
     register,
     formState: { errors },
   } = useForm<PetFormValues>({
-    // @ts-expect-error - YupResolver type inference is complex
-    resolver: yupResolver(validationSchema),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    resolver: yupResolver(validationSchema) as any,
     defaultValues: {
       firstName: '',
       lastName: '',
@@ -98,7 +98,7 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
     criteriaMode: 'firstError', // Only show first error per field
   });
 
-  const onSubmit: SubmitHandler<PetFormValues> = (data) => {
+  const onSubmit = (data: PetFormValues) => {
     alert(JSON.stringify(data, null, 2)); // TODO: replace with post request
   };
 
