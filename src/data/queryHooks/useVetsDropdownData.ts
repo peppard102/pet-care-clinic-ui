@@ -6,7 +6,7 @@ import { VetDropdownApiResponse } from '../../types';
 // Query for the list of vets for the dropdown.
 const useVetsDropdownData = (): VetDropdownApiResponse[] => {
   const { data } = useSuspenseQuery({
-    queryKey: [QueryKey.GET_VETS],
+    queryKey: [QueryKey.GET_VETS_DROPDOWN],
     queryFn: fetchVetsDropdownData,
   });
 

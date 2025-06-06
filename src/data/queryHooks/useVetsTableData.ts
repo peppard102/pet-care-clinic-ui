@@ -7,7 +7,7 @@ import { formatAddress } from '../../utils/helperFunctions';
 // Query for the list of vets.
 const useVets = (): FormattedVet[] => {
   const { data } = useSuspenseQuery({
-    queryKey: [QueryKey.GET_VETS],
+    queryKey: [QueryKey.GET_VETS_TABLE],
     queryFn: fetchVetsTableData,
     select: (data) =>
       data.map((vet) => ({

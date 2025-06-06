@@ -1,4 +1,5 @@
 export enum QueryKey {
-	GET_VETS = 'GetVets',
-	GET_PETS = 'GetPets',
-};
+  GET_VETS_TABLE = 'GetVetsTable',
+  GET_VETS_DROPDOWN = 'GetVetsDropdown',
+  GET_PETS = 'GetPets',
+}
