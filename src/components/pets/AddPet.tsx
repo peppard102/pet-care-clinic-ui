@@ -80,8 +80,8 @@ export default function AddPet({ open, setOpen }: AddPetProps) {
     register,
     formState: { errors },
   } = useForm<PetFormValues>({
-    // @ts-ignore - YupResolver type inference is complex
-    resolver: yupResolver(validationSchema) as any,
+    // @ts-expect-error - YupResolver type inference is complex
+    resolver: yupResolver(validationSchema),
     defaultValues: {
       firstName: '',
       lastName: '',
